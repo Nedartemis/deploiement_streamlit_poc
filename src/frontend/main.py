@@ -1,4 +1,5 @@
 import streamlit as st
+from tqdm import trange
 
 TITLE = "Hello Wolrd !!!"
 
@@ -15,3 +16,4 @@ else:
 
 st.text(body=st.session_state.logs)
 st.button(label="fake")
+st.text(body=trange(1000000))
