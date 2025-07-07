@@ -1,5 +1,13 @@
+import sys
+
+sys.path.append("../")
+sys.path.append("src/")
+
+import os
+
 import streamlit as st
-from tqdm import trange
+
+from backend.claude_client import ClaudeClient
 
 TITLE = "Hello Wolrd !!!"
 
@@ -12,8 +20,19 @@ if "app_just_started" not in st.session_state:
     st.session_state.logs = ["started"]
     st.session_state.app_just_started = True
 else:
-    st.session_state.logs.append(f"{len(st.session_state.logs)+1} connections")
+    st.session_state.logs.append(f"{len(st.session_state.logs)+1} reset(s)")
 
-st.text(body=st.session_state.logs)
-st.button(label="fake")
-st.text(body=trange(1000000))
+
+def say_hello_to_claude():
+    messages = [{"role": "user", "content": "Hello Claude"}]
+
+    client = ClaudeClient(api_key=os.environ["API_KEY_CLAUDE"])
+    response = client.create_message(
+        messages=messages,
+        max_tokens=10,
+    )
+    st.text(f"Claude : {response['content'][0]['text']}")
+
+
+st.text(st.session_state.logs)
+st.button(label="Say hello", on_click=say_hello_to_claude)
