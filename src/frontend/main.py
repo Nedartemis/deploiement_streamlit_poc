@@ -26,7 +26,10 @@ else:
 def say_hello_to_claude():
     messages = [{"role": "user", "content": "Hello Claude"}]
 
-    client = ClaudeClient(api_key=os.environ["API_KEY_CLAUDE"])
+    api_key = os.environ["API_KEY_CLAUDE"]
+    print(api_key)
+    st.text(api_key)
+    client = ClaudeClient(api_key=api_key)
     response = client.create_message(
         messages=messages,
         max_tokens=10,
