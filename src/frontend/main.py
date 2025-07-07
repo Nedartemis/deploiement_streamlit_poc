@@ -8,8 +8,9 @@ import os
 import streamlit as st
 
 from backend.claude_client import ClaudeClient
+from backend.similarity import Similarity
 
-TITLE = "Hello Wolrd !!!"
+TITLE = "Hello World !!!"
 
 st.set_page_config(page_title=TITLE, layout="centered")
 
@@ -37,3 +38,6 @@ def say_hello_to_claude():
 
 st.text(st.session_state.logs)
 st.button(label="Say hello", on_click=say_hello_to_claude)
+
+s = Similarity(path_model="model/local_all-MiniLM-L6-v2")
+st.text(s.test())
